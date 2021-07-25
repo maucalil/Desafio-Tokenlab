@@ -1,0 +1,59 @@
+main {
+    padding-top: 100px;
+    height: 100vh;
+    text-align: center;
+}
+
+
+.text
+{
+    margin-left: 30vw;
+    margin-right: 30vw;
+    width: 100vw;
+    text-align: left;
+    font-size: x-large;
+}
+
+body
+{
+    background-color: snow;
+}
+#table
+{
+    background-color: #F8F8FF;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+
+h1,h2,h3,h4
+{
+    color: black;
+    padding: 0px;
+    margin: 0px;
+}
+.h1
+{
+    padding-top: 150px;
+    padding: 0px;
+    margin: 0px;
+}
+.h4
+{
+    padding-bottom: 150px;
+}
+button
+{
+    margin-bottom: 10px;
+    transition: all 100ms;
+}
+button:hover
+{
+    transform: scale(1.15)
+}
+form {
+    display: inline-block;
+}
+
+

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Editar evento
+{% endblock %}
+
+{% block main %}
+<div class="container p-5">
+    <form action="/edit" method="post">
+        <select class="form-group" id="name" name="name">
+            <option value="" disabled selected>Selecione o evento que deseja editar:</option>
+            {% for row in events_rows %}
+            <option id="edit" name="edit">{{ row["name"]}}</option>
+            {%endfor%}
+        </select>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" id="new_name" name="new_name" placeholder="Nome"
+                type="text">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="date" name="date" placeholder="Data(DD/MM/AAAA)"
+                type="dtext">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="description" name="description" placeholder="Descrição"
+                type="text" maxlength="100">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="start" name="start" placeholder="Hora de início"
+                type="text">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="end" name="end" placeholder="Hora de término"
+                type="text">
+        </div>
+        <form>
+            <button class="btn btn-primary" id="submit" type="submit" disabled>Editar</button>
+        </form>
+</div>
+<script type="text/javascript" src="static/remove.js"></script>
+<script type="text/javascript" src="static/add.js"></script>
+{% endblock %}

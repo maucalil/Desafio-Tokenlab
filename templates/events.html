@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+        <div class="container p-5">
+            <div>
+                <form class="lf" align="left" method="get" action="{{url_for('add')}}">
+                    <button class="btn btn-primary btn-sm" id="add" name="add">+ Adicione um evento</button>
+                </form>
+                
+            </div>
+            <table id="table" style="width:100%" class="table table-striped">
+
+                <thead>
+                    <tr class="thead-dark">
+                       <th>Nome</th>
+                       <th>Data</th>
+                       <th>Descrição</th>
+                       <th>Horário de início</th>
+                       <th>Horário de término</th>
+                       <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in events_rows %}
+                        <tr>
+                            <td>{{ row["name"] }}</td>
+                            <td>{{  row["date"] }}</td>
+                            <td>{{ row["description"] }}</td>
+                            <td>{{ row["start"] }}</td>
+                            <td>{{ row["end"] }}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock %}

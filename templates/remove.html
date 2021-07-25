@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Remover evento
+{% endblock %}
+
+{% block main %}
+<div class="container p-5">
+    <form action="/remove" method="post">
+        <select class="form-group" id="name" name="name">
+            <option value="" disabled selected>Selecione o evento que deseja remover:</option>
+            {% for row in events_rows %}
+            <option id="remove" name="remove">{{ row["name"]}}</option>
+            {%endfor%}
+        </select>
+        <form>
+            <button class="btn btn-primary" id="submit" type="submit" disabled>Remover</button>
+        </form>
+</div>
+<script type="text/javascript" src="static/remove.js"></script>
+{% endblock %}

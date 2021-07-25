@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Editando evento
+{% endblock %}
+
+{% block main %}
+<div class="container p-5">
+    <form action="/editing" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" id="name" name="name" placeholder="Nome"
+                type="text" value="{{name}}">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="date" name="date" placeholder="Data(DD/MM/AAAA)"
+                type="dtext" value="{{date}}">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="description" name="description" placeholder="Descrição"
+                type="text" maxlength="100" value="{{description}}">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="start" name="start" placeholder="Hora de início"
+                type="text" value="{{start}}">
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" class="form-control" id="end" name="end" placeholder="Hora de término" type="text"
+                value="{{end}}">
+        </div>
+
+        <button class="btn btn-primary" id="submit" type="submit" disabled>Salvar</button>
+    </form>
+</div>
+
+<script type="text/javascript" src="static/add.js"></script>
+
+{% endblock %}
