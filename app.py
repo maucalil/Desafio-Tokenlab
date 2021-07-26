@@ -4,6 +4,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from tempfile import mkdtemp
 from flask_session import Session
 from helper import login_required
+from datetime import datetime
+import re
 
 app = Flask(__name__)
 
@@ -55,31 +57,60 @@ def add():
         start = request.form.get("start")
         end = request.form.get("end")
 
-        names = db.execute("SELECT name FROM events WHERE id=:id", id=session["user_id"])
-        already_name = []
-        for i in range(len(names)):
-            already_name.append(names[i]["name"])
-        # checa se o nome das contas são iguais, adicionando 1,2,3,...,n na frente
-        if name in already_name:
-            name_counter = 1
-            while (name in already_name):
-                name_counter += 1
-                new_name = str(name) + str(name_counter)
-                if new_name in already_name:
-                    continue
-                else:
-                    name = new_name
-                    break
-        # insere os valores na tabela
-        db.execute("INSERT INTO events (id, name, date, description, start, end) VALUES (:id , :name, :date, :description, :start, :end)",
-                    id=session["user_id"],
-                    name=name,
-                    date=date,
-                    description=description,
-                    start=start,
-                    end=end)
-        # Redirect user to see the table
-        return redirect("/events")
+        # Put validade in the pattern of date
+        valid_date = re.match("[0-9]{2}/[0-9]{2}/[0-9]{4}", date)
+        # Validates validade
+        if not valid_date:
+            flash("Data inválida, use o formato Dia/Mês/Ano. Ex: 22/09/2020")
+            return redirect("/add")
+
+        # Define DD/MM/YYYY for date
+        day,month,year = date.split("/")
+        # Check if user inputed a correct value for day, month or year
+        if int(day) > 31 or int(month) > 12 or int(year) > 9999:
+            flash("Valor inválido para dia, mês ou ano.")
+            return redirect("/add")
+
+        # Check if the valid_date date is a valid date
+        isValidDate = True
+        try:
+            datetime(int(year),int(month),int(day))
+        except ValueError:
+            isValidDate = False
+            if True:
+                flash("Data inválida, use o formato Dia/Mês/Ano. Ex: 22/09/2020")
+                return redirect("/add")
+        if not isValidDate:
+            flash("Data de validade inválida, use o formato Dia/Mês/Ano. Ex: 22/09/2020")
+            return redirect("/add")
+        else:
+            # Convert the user input(validade) and convert it into a real date
+            final_date = datetime(int(year),int(month),int(day))
+            names = db.execute("SELECT name FROM events WHERE id=:id", id=session["user_id"])
+            already_name = []
+            for i in range(len(names)):
+                already_name.append(names[i]["name"])
+            # checa se o nome das contas são iguais, adicionando 1,2,3,...,n na frente
+            if name in already_name:
+                name_counter = 1
+                while (name in already_name):
+                    name_counter += 1
+                    new_name = str(name) + str(name_counter)
+                    if new_name in already_name:
+                        continue
+                    else:
+                        name = new_name
+                        break
+            # insere os valores na tabela
+            db.execute("INSERT INTO events (id, name, date, description, start, end) VALUES (:id , :name, :date, :description, :start, :end)",
+                        id=session["user_id"],
+                        name=name,
+                        date=final_date,
+                        description=description,
+                        start=start,
+                        end=end)
+            # Redirect user to see the table
+            return redirect("/events")
 
     else:
         # Display add form to the user when he gets to /add
