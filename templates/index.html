@@ -5,10 +5,15 @@ Home
 {% endblock %}
 
 {% block main %}
-<div class="text">
+{% if not session.user_id %}
+<div>
     <h1>Bem vindo ao seu calendário de eventos!</h1>
     <h3>Vamos começar?</h3>
     <p>Primeiro, faça o login ou registre-se.</p>
 </div>
-
+{%else%}
+<div>
+    <h1>Agora basta usar a barra de navegação!</h1>
+</div>
+{% endif %}
 {% endblock %}
