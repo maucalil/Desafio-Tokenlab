@@ -1,0 +1,67 @@
+// Variables
+
+@import "variables"; // import other scss files
+
+// Mixins - pedaços de código css ou scss que podem ser injetados em outras partes
+
+@import "mixins";
+
+body {
+    background-color: $primary-color;
+}
+
+h1 {
+    font-size: $default-font-size;
+}
+
+.principal-banner {
+    @include banner;
+    text-align: right;
+}
+
+.secondary-banner {
+    @include banner;
+    li {
+        max-width: 500px;
+    }
+}
+
+a {
+    color: blue;
+    &:hover { // Pseudo class, equivale à a:hover em css
+        background: white;
+    }
+}
+
+nav {
+    li {
+        width: (100% / 6); // Math operations - divide 100% do width igualmente para os 6 itens
+    }
+}
+
+#projects li {
+    @include grid(4, 2%);
+    img {
+        width: 100%;
+    }
+}
+
+// Can use Colour Functions if you want -> https://sass-lang.com/documentation/modules
+
+// @content can be a "blank" space that will be changed by what you type 
+/* Example
+    @mixin teste {
+        images {
+            @content
+        }
+
+    }
+
+    image1 {
+        @include teste {
+            width: 100%;
+        }
+    }
+*/
+
+// @if for if statements
